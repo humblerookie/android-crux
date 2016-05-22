@@ -1,27 +1,34 @@
 package com.hr.crux;
 
-import com.hr.crux.loaders.AppUtilComponents;
-import com.hr.crux.loaders.AppUtils;
-import com.hr.crux.loaders.DaggerAppUtilComponents;
+import com.hr.crux.components.DaggerHttpComponent;
+import com.hr.crux.module.HttpModule;
+import com.hr.crux.util.ComponentHost;
+
 
 public class Application extends android.app.Application {
 
     private static Application application;
 
-    AppUtilComponents appUtilComponents;
+    private static ComponentHost componentHost;
+
 
     @Override
     public void onCreate() {
         super.onCreate();
         application = this;
-        appUtilComponents = DaggerAppUtilComponents.builder().appUtils(new AppUtils()).build();
+        componentHost = new ComponentHost();
+        componentHost.setHttpComponent(DaggerHttpComponent.builder().httpModule(new HttpModule()).build());
+
     }
+
 
     public static Application getInstance() {
         return application;
     }
 
-    public AppUtilComponents getComponent() {
-        return appUtilComponents;
+
+    public static ComponentHost getComponentHost() {
+        return componentHost;
     }
+
 }

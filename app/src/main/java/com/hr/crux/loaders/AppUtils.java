@@ -7,22 +7,21 @@ import com.hr.crux.Application;
 
 import java.util.List;
 
-import javax.inject.Singleton;
 
-import dagger.Module;
-import dagger.Provides;
-
-@Module
 public class AppUtils {
 
-    @Provides
-    @Singleton
-    public AppUtils getInstance() {
-        return new AppUtils();
+    private static Application application;
+
+    AppUtils(Application context) {
+        application = context;
+    }
+
+    public static AppUtils getInstance() {
+        return new AppUtils(application);
     }
 
     public List<ApplicationInfo> getApps() {
-        final PackageManager pm = Application.getInstance().getPackageManager();
+        final PackageManager pm = application.getPackageManager();
         return pm.getInstalledApplications(PackageManager.GET_META_DATA);
 
     }
