@@ -1,19 +1,17 @@
 
 # android-crux
-Fundamental architecture for android apps which includes the core elements like
+A boiler plate architecture for android apps which includes the core elements.
 
 
 ##Primary Features
  
   - Minimal libraries needed to be up and running
-  - A MVVM architecture
+  - A MVP architecture
   - Test sets UI and Unit
   - Dependency Injection with Dagger
   - RX Android
 
 ##Secondaries
-
-  - naming conventions for resources
   - project organization
   - obfuscation model
-
+  - naming conventions
