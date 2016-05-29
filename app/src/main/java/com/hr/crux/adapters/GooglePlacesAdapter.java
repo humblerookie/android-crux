@@ -4,19 +4,18 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.hr.crux.R;
-import com.hr.crux.core.model.GooglePlacesResult;
+import com.hr.crux.core.model.GResult;
 
 import java.util.List;
 
 public class GooglePlacesAdapter extends RecyclerView.Adapter<GooglePlacesAdapter.ViewHolder> {
 
-    List<GooglePlacesResult> data;
+    List<GResult.GooglePlacesResult> data;
 
-    public GooglePlacesAdapter(List<GooglePlacesResult> applicationInfos) {
+    public GooglePlacesAdapter(List<GResult.GooglePlacesResult> applicationInfos) {
         data = applicationInfos;
     }
 
@@ -43,18 +42,17 @@ public class GooglePlacesAdapter extends RecyclerView.Adapter<GooglePlacesAdapte
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
         TextView textView;
-        ImageView imageView;
 
         public ViewHolder(View itemView) {
             super(itemView);
 
             textView = (TextView) itemView.findViewById(R.id.app_name);
-            imageView = (ImageView) itemView.findViewById(R.id.app_icon);
+
         }
     }
 
 
-    public void setData(List<GooglePlacesResult> results) {
+    public void setData(List<GResult.GooglePlacesResult> results) {
         data = results;
         notifyDataSetChanged();
     }

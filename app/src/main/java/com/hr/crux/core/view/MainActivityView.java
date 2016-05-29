@@ -1,15 +1,14 @@
 package com.hr.crux.core.view;
 
-import com.hannesdorfmann.mosby.mvp.MvpView;
-import com.hr.crux.core.model.GooglePlacesResult;
+import com.hannesdorfmann.mosby.mvp.lce.MvpLceView;
+import com.hr.crux.core.model.GResult;
 
 import java.util.List;
 
-public interface MainActivityView extends MvpView {
+public interface MainActivityView extends MvpLceView<List<GResult.GooglePlacesResult>> {
 
-    void showProgress();
-
-    void showData(List<GooglePlacesResult> data);
-
-    void showError();
+    /**
+     * Everything needed is provided by LceView
+     * This interface is just for consistent name.
+     * */
 }

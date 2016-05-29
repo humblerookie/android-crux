@@ -1,5 +1,6 @@
 package com.hr.crux.core.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.view.MenuItemCompat;
@@ -10,9 +11,10 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.View;
 
+import com.hannesdorfmann.mosby.mvp.MvpPresenter;
 import com.hr.crux.R;
 import com.hr.crux.adapters.GooglePlacesAdapter;
-import com.hr.crux.core.model.GooglePlacesResult;
+import com.hr.crux.core.model.GResult;
 import com.hr.crux.core.presenter.MainActivityPresenter;
 import com.hr.crux.core.view.MainActivityView;
 import com.jakewharton.rxbinding.support.v7.widget.RxSearchView;
@@ -23,7 +25,6 @@ import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import hugo.weaving.DebugLog;
 import rx.android.schedulers.AndroidSchedulers;
 
 public class MainActivity extends BaseActivity<MainActivityView, MainActivityPresenter> implements MainActivityView {
@@ -50,9 +51,6 @@ public class MainActivity extends BaseActivity<MainActivityView, MainActivityPre
 
     private GooglePlacesAdapter adapter;
 
-    private MainActivityPresenter mainPresenter;
-
-    @DebugLog
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -61,8 +59,6 @@ public class MainActivity extends BaseActivity<MainActivityView, MainActivityPre
         setContentView(R.layout.activity_main);
 
         initViews();
-
-        initMvp();
 
     }
 
@@ -83,19 +79,9 @@ public class MainActivity extends BaseActivity<MainActivityView, MainActivityPre
 
     }
 
-    private void initMvp() {
-
-        mainPresenter = (MainActivityPresenter) presenter;
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-    }
-
     @NonNull
     @Override
-    public MainActivityPresenter createPresenter() {
+    public MvpPresenter<MainActivityView> createPresenter() {
 
         return new MainActivityPresenter();
     }
@@ -107,34 +93,46 @@ public class MainActivity extends BaseActivity<MainActivityView, MainActivityPre
         // Retrieve the SearchView and plug it into SearchManager
         searchView = (SearchView) MenuItemCompat.getActionView(menu.findItem(R.id.action_search));
 
-
         RxSearchView.queryTextChanges(searchView)
-                .debounce(3000, TimeUnit.MILLISECONDS, AndroidSchedulers.mainThread())
+                .debounce(500, TimeUnit.MILLISECONDS, AndroidSchedulers.mainThread())
                 .subscribe(f -> {
-                    mainPresenter.onTextChanged(f.toString());
+                    ((MainActivityPresenter) getPresenter()).onTextChanged(f.toString());
                 });
 
         return true;
     }
 
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+    }
 
     @Override
-    public void showProgress() {
+    public void showLoading(boolean pullToRefresh) {
         progressView.setVisibility(View.VISIBLE);
     }
 
     @Override
-    public void showData(List<GooglePlacesResult> data) {
-        progressView.setVisibility(View.GONE);
+    public void showContent() {
         contentView.setVisibility(View.VISIBLE);
+        progressView.setVisibility(View.GONE);
         errorView.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void showError(Throwable e, boolean pullToRefresh) {
+        progressView.setVisibility(View.GONE);
+        contentView.setVisibility(View.GONE);
+        errorView.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void setData(List<GResult.GooglePlacesResult> data) {
         adapter.setData(data);
     }
 
     @Override
-    public void showError() {
-        progressView.setVisibility(View.GONE);
-        contentView.setVisibility(View.GONE);
-        errorView.setVisibility(View.VISIBLE);
+    public void loadData(boolean pullToRefresh) {
+
     }
 }
