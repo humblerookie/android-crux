@@ -4,6 +4,7 @@ apply plugin: 'com.jakewharton.hugo'
 apply plugin: 'me.tatarka.retrolambda'
 
 android {
+
     compileSdkVersion rootProject.ext.compileSdkVersion
     buildToolsVersion rootProject.ext.buildToolsVersion
     compileOptions {
@@ -62,18 +63,14 @@ dependencies {
     compile 'com.jakewharton.rxbinding:rxbinding:0.4.0'
     compile 'com.jakewharton.rxbinding:rxbinding-appcompat-v7:0.4.0'
 
-    compile 'com.hannesdorfmann.mosby:mvp:2.0.1'
-    compile 'com.hannesdorfmann.mosby:viewstate:2.0.1'
+    compile "frankiesardo:icepick:$rootProject.ext.icepickVersion"
+    provided "frankiesardo:icepick-processor:$rootProject.ext.icepickVersion"
 
     compile 'com.google.code.gson:gson:2.6.2'
 
 
 
 
-    testCompile "org.mockito:mockito-all:$rootProject.ext.mockitoVersion"
-    testCompile "org.hamcrest:hamcrest-all:$rootProject.ext.hamcrestVersion"
-    testCompile "org.powermock:powermock-module-junit4:$rootProject.ext.powerMockito"
-    testCompile "org.powermock:powermock-api-mockito:$rootProject.ext.powerMockito"
 
 
 }

@@ -1,6 +1,5 @@
 package com.hr.crux.core.presenter;
 
-import com.hannesdorfmann.mosby.mvp.MvpBasePresenter;
 import com.hr.crux.Application;
 import com.hr.crux.BuildConfig;
 import com.hr.crux.api.GooglePlacesResource;
@@ -17,7 +16,7 @@ import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
-public class MainActivityPresenter extends MvpBasePresenter<MainActivityView> {
+public class MainActivityPresenter extends BasePresenter<MainActivityView> {
     /**
      * Dagger Injections
      */
@@ -26,8 +25,8 @@ public class MainActivityPresenter extends MvpBasePresenter<MainActivityView> {
     Retrofit retrofit;
 
 
-    public MainActivityPresenter() {
-
+    public MainActivityPresenter(MainActivityView mainActivityView) {
+        super(mainActivityView);
         Application.getComponentHost().getHttpComponent().inject(this);
 
     }

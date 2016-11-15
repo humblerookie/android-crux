@@ -9,10 +9,10 @@ import java.util.List;
 public class GResult {
 
     @SerializedName("predictions")
-    private List<GooglePlacesResult> predictions;
+    public List<GooglePlacesResult> predictions;
 
     @SerializedName("status")
-    private String status;
+    public String status;
 
     public List<GooglePlacesResult> getPredictions() {
         return predictions;
@@ -33,43 +33,43 @@ public class GResult {
     public static class GooglePlacesResult {
 
         @SerializedName("description")
-        private String description;
+        public String description;
 
         @SerializedName("id")
-        private String id;
+        public String id;
 
         @SerializedName("place_id")
-        private String placeId;
+        public String placeId;
 
         @SerializedName("reference")
-        private String reference;
+        public String reference;
 
         @SerializedName("formatted_address")
-        private String address;
+        public String address;
 
         @SerializedName("geometry")
-        private Geometry geometry;
+        public Geometry geometry;
 
         @SerializedName("icon")
-        private String icon;
+        public String icon;
 
         @SerializedName("name")
-        private String name;
+        public String name;
 
         @SerializedName("types")
-        private List<String> types = new ArrayList<String>();
+        public List<String> types = new ArrayList<String>();
 
         @SerializedName("terms")
-        private ArrayList<Terms> terms;
+        public ArrayList<Terms> terms;
 
 
         public static class Terms {
 
             @SerializedName("offset")
-            private int offset;
+            public int offset;
 
             @SerializedName("value")
-            private String value;
+            public String value;
 
             public int getOffset() {
                 return offset;
@@ -91,7 +91,7 @@ public class GResult {
         public static class Geometry {
 
             @SerializedName("location")
-            private HashMap<String, Double> location;
+            public HashMap<String, Double> location;
 
             public HashMap<String, Double> getLocation() {
                 return location;

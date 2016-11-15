@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="margin_large">16dp</dimen>
+    <dimen name="margin_normal">12dp</dimen>
+    <dimen name="margin_small">10dp</dimen>
+    <dimen name="margin_tiny">4dp</dimen>
+
+
+    <dimen name="size_item_small">26dp</dimen>
+    <dimen name="size_progressbar_normal">36dp</dimen>
+    <dimen name="size_refresh_icon">32dp</dimen>
+
+</resources>

@@ -11,10 +11,11 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.View;
 
-import com.hannesdorfmann.mosby.mvp.MvpPresenter;
 import com.hr.crux.R;
 import com.hr.crux.adapters.GooglePlacesAdapter;
 import com.hr.crux.core.model.GResult;
+import com.hr.crux.core.model.RetrofitError;
+import com.hr.crux.core.presenter.BasePresenter;
 import com.hr.crux.core.presenter.MainActivityPresenter;
 import com.hr.crux.core.view.MainActivityView;
 import com.jakewharton.rxbinding.support.v7.widget.RxSearchView;
@@ -27,7 +28,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import rx.android.schedulers.AndroidSchedulers;
 
-public class MainActivity extends BaseActivity<MainActivityView, MainActivityPresenter> implements MainActivityView {
+public class MainActivity extends BaseActivity implements MainActivityView{
 
 
     /**
@@ -51,15 +52,15 @@ public class MainActivity extends BaseActivity<MainActivityView, MainActivityPre
 
     private GooglePlacesAdapter adapter;
 
+    private MainActivityPresenter presenter;
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_main);
 
+        setPresenter(new MainActivityPresenter(this));
         initViews();
-
     }
 
     private void initViews() {
@@ -79,12 +80,6 @@ public class MainActivity extends BaseActivity<MainActivityView, MainActivityPre
 
     }
 
-    @NonNull
-    @Override
-    public MvpPresenter<MainActivityView> createPresenter() {
-
-        return new MainActivityPresenter();
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -96,7 +91,7 @@ public class MainActivity extends BaseActivity<MainActivityView, MainActivityPre
         RxSearchView.queryTextChanges(searchView)
                 .debounce(500, TimeUnit.MILLISECONDS, AndroidSchedulers.mainThread())
                 .subscribe(f -> {
-                    ((MainActivityPresenter) getPresenter()).onTextChanged(f.toString());
+                    getPresenter().onTextChanged(f.toString());
                 });
 
         return true;
@@ -120,7 +115,7 @@ public class MainActivity extends BaseActivity<MainActivityView, MainActivityPre
     }
 
     @Override
-    public void showError(Throwable e, boolean pullToRefresh) {
+    public void showError(RetrofitError retrofitError, boolean pullToRefresh) {
         progressView.setVisibility(View.GONE);
         contentView.setVisibility(View.GONE);
         errorView.setVisibility(View.VISIBLE);
@@ -132,7 +127,12 @@ public class MainActivity extends BaseActivity<MainActivityView, MainActivityPre
     }
 
     @Override
-    public void loadData(boolean pullToRefresh) {
+    public MainActivityPresenter getPresenter() {
+        return presenter;
+    }
 
+    @Override
+    public void setPresenter(MainActivityPresenter presenter) {
+        this.presenter = presenter;
     }
 }

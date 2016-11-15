@@ -9,36 +9,17 @@ import retrofit2.adapter.rxjava.HttpException;
 
 public class RetrofitError extends Throwable {
 
-    private Type type;
+    public Type type;
 
-    private int code;
+    public int code;
 
-    private String message;
+    public String message;
 
     @Override
     public String getMessage() {
         return message;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
-    }
-
-    public int getCode() {
-        return code;
-    }
-
-    public void setCode(int code) {
-        this.code = code;
-    }
-
-    public Type getType() {
-        return type;
-    }
-
-    public void setType(Type type) {
-        this.type = type;
-    }
 
     public enum Type {
         NETWORK,
@@ -53,12 +34,12 @@ public class RetrofitError extends Throwable {
         } else if (throwable instanceof JsonSyntaxException) {
             type = Type.CONVERTER;
             JsonSyntaxException exception = (JsonSyntaxException) throwable;
-            setMessage(exception.getMessage());
+            this.message = exception.getMessage();
         } else {
             type = Type.HTTP;
             HttpException exception = (HttpException) throwable;
-            setCode(exception.code());
-            setMessage(exception.getMessage());
+            this.code = exception.code();
+            this.message = exception.getMessage();
 
         }
 
