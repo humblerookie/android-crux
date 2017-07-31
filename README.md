@@ -1,5 +1,10 @@
 
-# android-crux
+ # Deprecated
+   
+  In favour of https://github.com/androidstarters/kotlin-android-starter
+
+
+# ~~android-crux~~
 A boiler plate architecture for android apps which includes the core elements.
 
 
